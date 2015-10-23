@@ -18,5 +18,11 @@ export function activate() {
 
 		// Display a message box to the user
 		vscode.window.showInformationMessage('Hello World!');
+		
+		var editor = vscode.window.getActiveTextEditor();
+		if (editor != undefined) {
+			console.log('Haha!');
+		};
+		
 	});
 }

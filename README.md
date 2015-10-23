@@ -23,3 +23,6 @@ Wraps a chunk of HTML code in tags
     }]
 }
 ```
+
+#TODO:
+Should we support `getSelections()` allowing multiple selections to be wrapped?
