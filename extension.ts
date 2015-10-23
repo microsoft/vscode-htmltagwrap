@@ -16,12 +16,38 @@ export function activate() {
 	vscode.commands.registerCommand('extension.htmlTagWrap', () => {
 		// The code you place here will be executed every time your command is executed
 
-		// Display a message box to the user
-		vscode.window.showInformationMessage('Hello World!');
-		
 		var editor = vscode.window.getActiveTextEditor();
 		if (editor != undefined) {
-			console.log('Haha!');
+			console.log('Window has been got');
+			
+			var selection = editor.getSelection();
+			var selectedText = editor.getTextDocument().getTextInRange(selection); //Am I doiong more than reading here?
+			
+			var firstIndex = 1;
+			var lastIndex = selectedText.length;
+			
+			console.log('selection is: ' + selectedText);
+			console.log('length is: ' + lastIndex);
+			
+			/*
+				editor.edit((editBuilder) => {
+					editBuilder.insert(new vscode.Position(1, 1), ' - ');
+					// content is still <<<Hello world!>>>
+			
+					editBuilder.insert(new vscode.Position(1, 6), ' my dear');
+					// content is still <<<Hello world!>>>
+			
+					editBuilder.replace(new vscode.Range(1, 7, 1, 12), 'friend');
+					// content is still <<<Hello world!>>>
+				}).then(() => {
+					// content is now <<< - Hello my dear friend!>>>
+					console.log('Edit applied!');
+				}, (err) => {
+					console.log('Edit rejected!');
+					console.error(err);
+				});
+			*/
+			
 		};
 		
 	});
