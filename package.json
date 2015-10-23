@@ -12,8 +12,14 @@
 	"main": "./out/extension",
 	"contributes": {
 		"commands": [{
-			"command": "extension.sayHello",
-			"title": "Hello World"
+			"command": "extension.htmlTagWrap",
+			"title": "Wrap in HTML Tags"
+		}],
+		"keybindings": [{
+			"command": "extension.htmlTagWrap",
+			"key": "alt+w",
+			"mac": "option+w", //TODO: does this work on mac?
+			"when": "editorTextFocus"
 		}]
 	},
 	"scripts": {
