@@ -26,3 +26,6 @@ Wraps a chunk of HTML code in tags
 
 #TODO:
 Should we support `getSelections()` allowing multiple selections to be wrapped?
+
+#Automatic Symmetrical Wrapping
+Down the road it would be nice to allow anything to intelligently wrap a chunk of code (e.g. if you type a tag `<p>` it will automatically type a `</p>` later; if you type a `<!--` then it will type a `-->`; if you type a `/*` then it will type `*/`; if you type `{('` then it will type `')}`).
