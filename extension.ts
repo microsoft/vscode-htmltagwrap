@@ -29,24 +29,34 @@ export function activate() {
 			console.log('selection is: ' + selectedText);
 			console.log('length is: ' + lastIndex);
 			
+			var selectionStart = selection.start.line;
+			var selectionEnd = selection.end.line;
+			
+			console.log('selection start:' + selectionStart);
+			console.log('selection end:' + selectionEnd);
+			
+			//TODO:
+			//if the selection is multiple lines, then we'll wrap tags on new lines above and below it
+			//if the selection is an entire line and only one line, then we'll wrap tags on that line
+			//if the selection is less than a full line, then we wrap tags inline
+			
 			/*
-				editor.edit((editBuilder) => {
-					editBuilder.insert(new vscode.Position(1, 1), ' - ');
-					// content is still <<<Hello world!>>>
+			editor.edit((editBuilder) => {
+				editBuilder.insert(new vscode.Position(1, 1), ' - ');
 			
-					editBuilder.insert(new vscode.Position(1, 6), ' my dear');
-					// content is still <<<Hello world!>>>
+				editBuilder.insert(new vscode.Position(1, 6), ' my dear');
 			
-					editBuilder.replace(new vscode.Range(1, 7, 1, 12), 'friend');
-					// content is still <<<Hello world!>>>
-				}).then(() => {
-					// content is now <<< - Hello my dear friend!>>>
-					console.log('Edit applied!');
-				}, (err) => {
-					console.log('Edit rejected!');
-					console.error(err);
-				});
-			*/
+				editBuilder.replace(new vscode.Range(1, 7, 1, 12), 'friend');
+			}).then(() => {
+				// content is now <<< - Hello my dear friend!>>>
+				console.log('Edit applied!');
+			}, (err) => {
+				console.log('Edit rejected!');
+				console.error(err);
+			});
+*/
+			
+			
 			
 		};
 		
