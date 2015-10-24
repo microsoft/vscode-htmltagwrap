@@ -25,6 +25,11 @@ Wraps a chunk of HTML code in tags
 ```
 
 #TODO:
+
+- Make the `<p>` tag default inserted tags with multi-selection of the `p` part
+- Once user hits spacebar, then the second multi-cursor is lost so the user can write attributes like classes or styles. (Idea courtesy of Ruben Rios)
+- Once tags are wrapping the code, the code should be tabbed in a level for proper formatting.
+
 Should we support `getSelections()` allowing multiple selections to be wrapped?
 
 #Automatic Symmetrical Wrapping

@@ -40,7 +40,9 @@ export function activate() {
 			//if the selection is an entire line and only one line, then we'll wrap tags on that line
 			//if the selection is less than a full line, then we wrap tags inline
 			
-			/*
+			
+			//REFERENCE CODE ************************************
+		/*
 			editor.edit((editBuilder) => {
 				editBuilder.insert(new vscode.Position(1, 1), ' - ');
 			
@@ -54,7 +56,7 @@ export function activate() {
 				console.log('Edit rejected!');
 				console.error(err);
 			});
-*/
+		*/
 			
 			
 			
