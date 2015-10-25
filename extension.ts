@@ -59,9 +59,11 @@ export function activate() {
 				// content is now <<< - Hello my dear friend!>>>
 				console.log('Edit applied!');
 
-				var firstTagSelectionRange = new vscode.Range(lineAbove, 3, lineAbove, 4);
+				var firstTagSelectionSelection: vscode.Selection = new vscode.Selection(lineAbove, 3, lineAbove, 4);
+				var lastTagSelectionSelection: vscode.Selection = new vscode.Selection(lineBelow, 2, lineBelow, 3);
+				var tagSelections: vscode.Selection[] = [firstTagSelectionSelection, lastTagSelectionSelection];
 				
-				editor.setSelection(firstTagSelectionRange)
+				editor.setSelections(tagSelections)
 			}, (err) => {
 				console.log('Edit rejected!');
 				console.error(err);
