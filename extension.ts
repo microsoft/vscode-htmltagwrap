@@ -36,7 +36,6 @@ export function activate() {
 			var lineBelow = selectionEnd.line + 1;
 			
 			
-			
 			//TODO:
 			//if the selection is multiple lines, then we'll wrap tags on new lines above and below it
 			//if the selection is an entire line and only one line, then we'll wrap tags on that line
@@ -54,11 +53,18 @@ export function activate() {
 				editBuilder.insert(new vscode.Position(lineBelow, selectionEnd.character), '<p>');
 			
 				editBuilder.insert(new vscode.Position(lineAbove, selectionStart.character), '</p>');
-			
-				editBuilder.replace(new vscode.Range(1, 7, 1, 12), 'friend');
+				
+				
 			}).then(() => {
 				// content is now <<< - Hello my dear friend!>>>
 				console.log('Edit applied!');
+				var tagCharacterPosition = {
+					"start": selectionStart.character - 3,
+					"end":selectionEnd.character - 2
+				};
+				var firstTagSelectionRange = new vscode.Range(lineAbove, tagCharacterPosition.start, lineAbove, tagCharacterPosition.end);
+				
+				editor.setSelection(firstTagSelectionRange)
 			}, (err) => {
 				console.log('Edit rejected!');
 				console.error(err);
