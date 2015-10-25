@@ -29,24 +29,31 @@ export function activate() {
 			console.log('selection is: ' + selectedText);
 			console.log('length is: ' + lastIndex);
 			
-			var selectionStart = selection.start.line;
-			var selectionEnd = selection.end.line;
+			var selectionStart = selection.start;
+			var selectionEnd = selection.end;
 			
-			console.log('selection start:' + selectionStart);
-			console.log('selection end:' + selectionEnd);
+			var lineAbove = selectionStart.line - 1;
+			var lineBelow = selectionEnd.line + 1;
+			
+			
 			
 			//TODO:
 			//if the selection is multiple lines, then we'll wrap tags on new lines above and below it
 			//if the selection is an entire line and only one line, then we'll wrap tags on that line
 			//if the selection is less than a full line, then we wrap tags inline
 			
+			/*
+			To tab in everything a level when adding tags that are above and below the selection,
+			do a FOR LOOP and add 5 spaces on each line at character 1 before doing the insertion of tags.
+			*/
+			
+			
 			
 			//REFERENCE CODE ************************************
-		/*
 			editor.edit((editBuilder) => {
-				editBuilder.insert(new vscode.Position(1, 1), ' - ');
+				editBuilder.insert(new vscode.Position(lineBelow, selectionEnd.character), '<p>');
 			
-				editBuilder.insert(new vscode.Position(1, 6), ' my dear');
+				editBuilder.insert(new vscode.Position(lineAbove, selectionStart.character), '</p>');
 			
 				editBuilder.replace(new vscode.Range(1, 7, 1, 12), 'friend');
 			}).then(() => {
@@ -56,8 +63,6 @@ export function activate() {
 				console.log('Edit rejected!');
 				console.error(err);
 			});
-		*/
-			
 			
 			
 		};
