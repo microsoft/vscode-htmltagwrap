@@ -58,11 +58,8 @@ export function activate() {
 			}).then(() => {
 				// content is now <<< - Hello my dear friend!>>>
 				console.log('Edit applied!');
-				var tagCharacterPosition = {
-					"start": selectionStart.character - 3,
-					"end":selectionEnd.character - 2
-				};
-				var firstTagSelectionRange = new vscode.Range(lineAbove, tagCharacterPosition.start, lineAbove, tagCharacterPosition.end);
+
+				var firstTagSelectionRange = new vscode.Range(lineAbove, 3, lineAbove, 4);
 				
 				editor.setSelection(firstTagSelectionRange)
 			}, (err) => {
