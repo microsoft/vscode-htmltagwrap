@@ -59,8 +59,8 @@ export function activate() {
 				// content is now <<< - Hello my dear friend!>>>
 				console.log('Edit applied!');
 
-				var firstTagSelectionSelection: vscode.Selection = new vscode.Selection(lineAbove, 3, lineAbove, 4);
-				var lastTagSelectionSelection: vscode.Selection = new vscode.Selection(lineBelow, 2, lineBelow, 3);
+				var firstTagSelectionSelection: vscode.Selection = new vscode.Selection(lineAbove, 2, lineAbove, 3);
+				var lastTagSelectionSelection: vscode.Selection = new vscode.Selection(lineBelow, 3, lineBelow, 4);
 				var tagSelections: vscode.Selection[] = [firstTagSelectionSelection, lastTagSelectionSelection];
 				
 				editor.setSelections(tagSelections)
