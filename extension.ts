@@ -50,9 +50,9 @@ export function activate() {
 			
 			//REFERENCE CODE ************************************
 			editor.edit((editBuilder) => {
-				editBuilder.insert(new vscode.Position(lineBelow, selectionEnd.character), '<p>');
+				editBuilder.insert(new vscode.Position(lineBelow, selectionEnd.character), '</p>');
 			
-				editBuilder.insert(new vscode.Position(lineAbove, selectionStart.character), '</p>');
+				editBuilder.insert(new vscode.Position(lineAbove, selectionStart.character), '<p>');
 				
 				
 			}).then(() => {
