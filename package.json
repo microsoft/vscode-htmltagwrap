@@ -18,7 +18,7 @@
 		"keybindings": [{
 			"command": "extension.htmlTagWrap",
 			"key": "alt+w",
-			"mac": "option+w", //TODO: does this work on mac?
+			"mac": "option+w",
 			"when": "editorTextFocus"
 		}]
 	},
