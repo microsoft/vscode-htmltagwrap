@@ -50,17 +50,27 @@ export function activate() {
 			
 			//REFERENCE CODE ************************************
 			editor.edit((editBuilder) => {
-				editBuilder.insert(new vscode.Position(lineBelow, selectionEnd.character), '</p>');
-			
-				editBuilder.insert(new vscode.Position(lineAbove, selectionStart.character), '<p>');
+				var totalLines = selectionEnd.line - selectionStart.line;
 				
+				/*
+				for (var i = 0; i < totalLines; i++) {
+					var _lineNumber = selectionStart.line + i;
+					console.log('FOR Loop: ' + _lineNumber);
+					editBuilder.insert(new vscode.Position(_lineNumber, 1), 'TEST');
+				}
+				*/
 				
+				editBuilder.insert(new vscode.Position(lineBelow, selectionEnd.character), '</p>\n');
+				
+				editBuilder.insert(new vscode.Position(lineAbove, selectionStart.character), '\n<p>');
+				
+					
 			}).then(() => {
-				// content is now <<< - Hello my dear friend!>>>
 				console.log('Edit applied!');
-
-				var firstTagSelectionSelection: vscode.Selection = new vscode.Selection(lineAbove, 2, lineAbove, 3);
-				var lastTagSelectionSelection: vscode.Selection = new vscode.Selection(lineBelow, 3, lineBelow, 4);
+				
+				var bottomTagLine = lineBelow + 1;
+				var firstTagSelectionSelection: vscode.Selection = new vscode.Selection(selectionStart.line, 2, selectionStart.line, 3);
+				var lastTagSelectionSelection: vscode.Selection = new vscode.Selection(bottomTagLine, 3, bottomTagLine, 4);
 				var tagSelections: vscode.Selection[] = [firstTagSelectionSelection, lastTagSelectionSelection];
 				
 				editor.setSelections(tagSelections)
