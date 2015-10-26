@@ -60,9 +60,9 @@ export function activate() {
 				}
 				*/
 				
-				editBuilder.insert(new vscode.Position(lineBelow, selectionEnd.character), '</p>\n');
+				editBuilder.insert(new vscode.Position(selectionEnd.line, selectionEnd.character), '\n</p>');
 				
-				editBuilder.insert(new vscode.Position(lineAbove, selectionStart.character), '\n<p>');
+				editBuilder.insert(new vscode.Position(selectionStart.line, selectionStart.character), '<p>\n');
 				
 					
 			}).then(() => {
