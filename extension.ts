@@ -35,7 +35,9 @@ export function activate() {
 			var lineAbove = selectionStart.line - 1;
 			var lineBelow = selectionEnd.line + 1;
 			
-			
+			let tabSize = editor.getOptions().tabSize;
+
+
 			//TODO:
 			//if the selection is multiple lines, then we'll wrap tags on new lines above and below it
 			//if the selection is an entire line and only one line, then we'll wrap tags on that line
