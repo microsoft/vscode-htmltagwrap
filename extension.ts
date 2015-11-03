@@ -36,7 +36,9 @@ export function activate() {
 			var lineBelow = selectionEnd.line + 1;
 			
 			let tabSize = editor.getOptions().tabSize;
-
+			//console.log('tabSize = ' + tabSize);
+			let tabSizeSpace = Array(tabSize+1).join(' ');
+			//console.log('tabsizeSpace =' + tabSizeSpace);
 
 			//TODO:
 			//if the selection is multiple lines, then we'll wrap tags on new lines above and below it
@@ -53,18 +55,19 @@ export function activate() {
 				
 				for (var i = selectionEnd.line; i >= selectionStart.line; i--) {
 					var _lineNumber = i;
+					
 					if (_lineNumber === selectionEnd.line) {
 						editBuilder.insert(new vscode.Position(_lineNumber, selectionEnd.character), '\n</p>');
-						editBuilder.insert(new vscode.Position(_lineNumber, 1), '    ');
+						editBuilder.insert(new vscode.Position(_lineNumber, 1), tabSizeSpace);
 						console.log('End line done.  Line #: ' + _lineNumber);
 					}
 					else if (_lineNumber === selectionStart.line) {
-						editBuilder.insert(new vscode.Position(_lineNumber, 1), '<p>\n'+'    ');
+						editBuilder.insert(new vscode.Position(_lineNumber, 1), '<p>\n'+tabSizeSpace);
 						console.log('Start Line done.  Line #: ' + _lineNumber);
 					}
 					else {
 						console.log('FOR Loop line #: ' + _lineNumber);
-						editBuilder.insert(new vscode.Position(_lineNumber, 1), '    ');
+						editBuilder.insert(new vscode.Position(_lineNumber, 1), tabSizeSpace);
 					}
 					
 				}
