@@ -49,24 +49,35 @@ export function activate() {
 			*/
 			
 			
-			
-			//REFERENCE CODE ************************************
 			editor.edit((editBuilder) => {
-				var totalLines = selectionEnd.line - selectionStart.line;
 				
-				/*
-				for (var i = 0; i < totalLines; i++) {
-					var _lineNumber = selectionStart.line + i;
-					console.log('FOR Loop: ' + _lineNumber);
-					editBuilder.insert(new vscode.Position(_lineNumber, 1), 'TEST');
-				}
-				*/
-				
-				editBuilder.insert(new vscode.Position(selectionEnd.line, selectionEnd.character), '\n</p>');
-				
-				editBuilder.insert(new vscode.Position(selectionStart.line, selectionStart.character), '<p>\n');
-				
+				for (var i = selectionEnd.line; i >= selectionStart.line; i--) {
+					var _lineNumber = i;
+					if (_lineNumber === selectionEnd.line) {
+						editBuilder.insert(new vscode.Position(_lineNumber, selectionEnd.character), '\n</p>');
+						editBuilder.insert(new vscode.Position(_lineNumber, 1), '    ');
+						console.log('End line done.  Line #: ' + _lineNumber);
+					}
+					else if (_lineNumber === selectionStart.line) {
+						editBuilder.insert(new vscode.Position(_lineNumber, 1), '<p>\n'+'    ');
+						console.log('Start Line done.  Line #: ' + _lineNumber);
+					}
+					else {
+						console.log('FOR Loop line #: ' + _lineNumber);
+						editBuilder.insert(new vscode.Position(_lineNumber, 1), '    ');
+					}
 					
+				}
+				
+				//
+				
+				//
+				
+/*
+*	.then() => {}  is called a lambda funciton.  It's in multiple programming language, new to ECMAScript6.
+*	It's like saying then(function(x));
+*
+*/					
 			}).then(() => {
 				console.log('Edit applied!');
 				
