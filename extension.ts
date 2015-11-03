@@ -55,14 +55,15 @@ export function activate() {
 				
 				for (var i = selectionEnd.line; i >= selectionStart.line; i--) {
 					var _lineNumber = i;
+					var selectionStart_spaces = Array(selectionStart.character).join(' ');
 					
 					if (_lineNumber === selectionEnd.line) {
-						editBuilder.insert(new vscode.Position(_lineNumber, selectionEnd.character), '\n</p>');
+						editBuilder.insert(new vscode.Position(_lineNumber, selectionEnd.character), '\n' + selectionStart_spaces + '</p>');
 						editBuilder.insert(new vscode.Position(_lineNumber, 1), tabSizeSpace);
 						console.log('End line done.  Line #: ' + _lineNumber);
 					}
 					else if (_lineNumber === selectionStart.line) {
-						editBuilder.insert(new vscode.Position(_lineNumber, 1), '<p>\n'+tabSizeSpace);
+						editBuilder.insert(new vscode.Position(_lineNumber, 1), selectionStart_spaces + '<p>\n'+tabSizeSpace);
 						console.log('Start Line done.  Line #: ' + _lineNumber);
 					}
 					else {
@@ -85,8 +86,8 @@ export function activate() {
 				console.log('Edit applied!');
 				
 				var bottomTagLine = lineBelow + 1;
-				var firstTagSelectionSelection: vscode.Selection = new vscode.Selection(selectionStart.line, 2, selectionStart.line, 3);
-				var lastTagSelectionSelection: vscode.Selection = new vscode.Selection(bottomTagLine, 3, bottomTagLine, 4);
+				var firstTagSelectionSelection: vscode.Selection = new vscode.Selection(selectionStart.line, selectionStart.character + 1, selectionStart.line, selectionStart.character + 2);
+				var lastTagSelectionSelection: vscode.Selection = new vscode.Selection(bottomTagLine, selectionStart.character + 2, bottomTagLine, selectionStart.character + 3);
 				var tagSelections: vscode.Selection[] = [firstTagSelectionSelection, lastTagSelectionSelection];
 				
 				editor.setSelections(tagSelections)
