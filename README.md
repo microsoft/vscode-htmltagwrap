@@ -2,12 +2,10 @@
 Wraps your selection in HTML tags.  Can wrap an inline selection or a selection of multiple lines.
 
 
-#how to use it
+#How to Use It
+Select a block of text or a string of text.  Press "Alt+W" or "Option+W" for Mac.
 
-##Hotkey
-Select a block of text or a string of text.  Press "Alt+W" or "Option+W" for Mac. 
-
-##Report Issues
+#Report Issues
 Please report an issue on GitHub if you have trouble.  We haven't tested this on Mac yet.
 
 #Developer TODO List:
