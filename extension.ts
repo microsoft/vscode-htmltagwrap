@@ -18,10 +18,12 @@ export function activate() {
 
 		var editor = vscode.window.getActiveTextEditor();
 		if (editor != undefined) {
+			
+			
 			console.log('Window has been got');
 			
 			var selection = editor.getSelection();
-			var selectedText = editor.getTextDocument().getTextInRange(selection); //Am I doiong more than reading here?
+			var selectedText = editor.getTextDocument().getTextInRange(selection);
 			
 			var firstIndex = 1;
 			var lastIndex = selectedText.length;
@@ -32,71 +34,97 @@ export function activate() {
 			var selectionStart = selection.start;
 			var selectionEnd = selection.end;
 			
-			var lineAbove = selectionStart.line - 1;
-			var lineBelow = selectionEnd.line + 1;
-			
-			let tabSize = editor.getOptions().tabSize;
-			//console.log('tabSize = ' + tabSize);
-			let tabSizeSpace = Array(tabSize+1).join(' ');
-			//console.log('tabsizeSpace =' + tabSizeSpace);
-
-			//TODO:
-			//if the selection is multiple lines, then we'll wrap tags on new lines above and below it
-			//if the selection is an entire line and only one line, then we'll wrap tags on that line
-			//if the selection is less than a full line, then we wrap tags inline
-			
-			/*
-			To tab in everything a level when adding tags that are above and below the selection,
-			do a FOR LOOP and add 5 spaces on each line at character 1 before doing the insertion of tags.
-			*/
-			
-			
-			editor.edit((editBuilder) => {
+			if (selectionEnd.line > selectionStart.line) {
+				//Wrap it as a block
+				var lineAbove = selectionStart.line - 1;
+				var lineBelow = selectionEnd.line + 1;
 				
-				for (var i = selectionEnd.line; i >= selectionStart.line; i--) {
-					var _lineNumber = i;
-					var selectionStart_spaces = Array(selectionStart.character).join(' ');
+				let tabSize = editor.getOptions().tabSize;
+				//console.log('tabSize = ' + tabSize);
+				let tabSizeSpace = Array(tabSize+1).join(' ');
+				var selectionStart_spaces = Array(selectionStart.character).join(' ');
+				
+				//console.log('tabsizeSpace =' + tabSizeSpace);
+	
+				//TODO:
+				//if the selection is multiple lines, then we'll wrap tags on new lines above and below it
+				//if the selection is an entire line and only one line, then we'll wrap tags on that line
+				//if the selection is less than a full line, then we wrap tags inline
+				
+				/*
+				To tab in everything a level when adding tags that are above and below the selection,
+				do a FOR LOOP and add 5 spaces on each line at character 1 before doing the insertion of tags.
+				*/
+				
+				
+				editor.edit((editBuilder) => {
 					
-					if (_lineNumber === selectionEnd.line) {
-						editBuilder.insert(new vscode.Position(_lineNumber, selectionEnd.character), '\n' + selectionStart_spaces + '</p>');
-						editBuilder.insert(new vscode.Position(_lineNumber, 1), tabSizeSpace);
-						console.log('End line done.  Line #: ' + _lineNumber);
-					}
-					else if (_lineNumber === selectionStart.line) {
-						editBuilder.insert(new vscode.Position(_lineNumber, 1), selectionStart_spaces + '<p>\n'+tabSizeSpace);
-						console.log('Start Line done.  Line #: ' + _lineNumber);
-					}
-					else {
-						console.log('FOR Loop line #: ' + _lineNumber);
-						editBuilder.insert(new vscode.Position(_lineNumber, 1), tabSizeSpace);
+					for (var i = selectionEnd.line; i >= selectionStart.line; i--) {
+						var _lineNumber = i;
+						
+						if (_lineNumber === selectionEnd.line) {
+							editBuilder.insert(new vscode.Position(_lineNumber, selectionEnd.character), '\n' + selectionStart_spaces + '</p>');
+							editBuilder.insert(new vscode.Position(_lineNumber, 1), tabSizeSpace);
+							console.log('End line done.  Line #: ' + _lineNumber);
+						}
+						else if (_lineNumber === selectionStart.line) {
+							editBuilder.insert(new vscode.Position(_lineNumber, 1), selectionStart_spaces + '<p>\n'+tabSizeSpace);
+							console.log('Start Line done.  Line #: ' + _lineNumber);
+						}
+						else {
+							console.log('FOR Loop line #: ' + _lineNumber);
+							editBuilder.insert(new vscode.Position(_lineNumber, 1), tabSizeSpace);
+						}
+						
 					}
 					
-				}
+					//
+					
+					//
+					
+				/*
+				*	.then() => {}  is called a lambda funciton.  It's in multiple programming language, new to ECMAScript6.
+				*	It's like saying then(function(x));
+				*
+				*/					
+				}).then(() => {
+					console.log('Edit applied!');
+					
+					var bottomTagLine = lineBelow + 1;
+					var firstTagSelectionSelection: vscode.Selection = new vscode.Selection(selectionStart.line, selectionStart.character + 1, selectionStart.line, selectionStart.character + 2);
+					var lastTagSelectionSelection: vscode.Selection = new vscode.Selection(bottomTagLine, selectionStart.character + 2, bottomTagLine, selectionStart.character + 3);
+					var tagSelections: vscode.Selection[] = [firstTagSelectionSelection, lastTagSelectionSelection];
+					
+					editor.setSelections(tagSelections)
+				}, (err) => {
+					console.log('Edit rejected!');
+					console.error(err);
+				});
 				
-				//
-				
-				//
-				
-/*
-*	.then() => {}  is called a lambda funciton.  It's in multiple programming language, new to ECMAScript6.
-*	It's like saying then(function(x));
-*
-*/					
-			}).then(() => {
-				console.log('Edit applied!');
-				
-				var bottomTagLine = lineBelow + 1;
-				var firstTagSelectionSelection: vscode.Selection = new vscode.Selection(selectionStart.line, selectionStart.character + 1, selectionStart.line, selectionStart.character + 2);
-				var lastTagSelectionSelection: vscode.Selection = new vscode.Selection(bottomTagLine, selectionStart.character + 2, bottomTagLine, selectionStart.character + 3);
-				var tagSelections: vscode.Selection[] = [firstTagSelectionSelection, lastTagSelectionSelection];
-				
-				editor.setSelections(tagSelections)
-			}, (err) => {
-				console.log('Edit rejected!');
-				console.error(err);
-			});
+							
+			}
 			
 			
+			else {
+				//Wrap it inline
+				editor.edit((editBuilder) => {
+						editBuilder.insert(new vscode.Position(selectionEnd.line, selectionEnd.character), '</p>');
+						editBuilder.insert(new vscode.Position(selectionEnd.line, selectionStart.character), '<p>');
+					}).then(() => {
+						console.log('Edit applied!');
+						
+						var firstTagSelectionSelection: vscode.Selection = new vscode.Selection(selectionStart.line, selectionStart.character + 1, selectionStart.line, selectionStart.character + 2);
+						var lastTagSelectionSelection: vscode.Selection = new vscode.Selection(selectionEnd.line, selectionEnd.character + 3 + 2, selectionEnd.line, selectionEnd.character + 3 + 3);
+						var tagSelections: vscode.Selection[] = [firstTagSelectionSelection, lastTagSelectionSelection];
+						
+						editor.setSelections(tagSelections)
+					}, (err) => {
+						console.log('Edit rejected!');
+						console.error(err);
+					});				
+			}
+			
+				
 		};
 		
 	});
