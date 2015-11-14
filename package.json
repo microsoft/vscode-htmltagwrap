@@ -23,7 +23,7 @@
 		"keybindings": [{
 			"command": "extension.htmlTagWrap",
 			"key": "alt+w",
-			"mac": "option+w",
+			"mac": "alt+w",
 			"when": "editorTextFocus"
 		}]
 	},
