@@ -19,7 +19,6 @@ export function activate() {
 		var editor = vscode.window.activeTextEditor;
 		if (editor != undefined) {
 			
-			
 			console.log('Window has been got');
 			
 			var selection = editor.selection;
@@ -30,6 +29,8 @@ export function activate() {
 			
 			console.log('selection is: ' + selectedText);
 			console.log('length is: ' + lastIndex);
+			console.log('selection.start.character: ' + selection.start.character);
+			console.log('selection.end.character: ' + selection.end.character);
 			
 			var selectionStart = selection.start;
 			var selectionEnd = selection.end;
@@ -41,21 +42,10 @@ export function activate() {
 				
 				let tabSize = editor.options.tabSize;
 				//console.log('tabSize = ' + tabSize);
-				let tabSizeSpace = Array(tabSize+1).join(' ');
-				var selectionStart_spaces = Array(selectionStart.character).join(' ');
+				let tabSizeSpace = '\t';
+				var selectionStart_spaces = Array(selectionStart.character).join('\t');
 				
 				//console.log('tabsizeSpace =' + tabSizeSpace);
-	
-				//TODO:
-				//if the selection is multiple lines, then we'll wrap tags on new lines above and below it
-				//if the selection is an entire line and only one line, then we'll wrap tags on that line
-				//if the selection is less than a full line, then we wrap tags inline
-				
-				/*
-				To tab in everything a level when adding tags that are above and below the selection,
-				do a FOR LOOP and add 5 spaces on each line at character 1 before doing the insertion of tags.
-				*/
-				
 				
 				editor.edit((editBuilder) => {
 					
@@ -64,16 +54,16 @@ export function activate() {
 						
 						if (_lineNumber === selectionEnd.line) {
 							editBuilder.insert(new vscode.Position(_lineNumber, selectionEnd.character), '\n' + selectionStart_spaces + '</p>');
-							editBuilder.insert(new vscode.Position(_lineNumber, 1), tabSizeSpace);
+							editBuilder.insert(new vscode.Position(_lineNumber, 0), tabSizeSpace);
 							console.log('End line done.  Line #: ' + _lineNumber);
 						}
 						else if (_lineNumber === selectionStart.line) {
-							editBuilder.insert(new vscode.Position(_lineNumber, 1), selectionStart_spaces + '<p>\n'+tabSizeSpace);
+							editBuilder.insert(new vscode.Position(_lineNumber, 0), selectionStart_spaces + '<p>\n'+tabSizeSpace);
 							console.log('Start Line done.  Line #: ' + _lineNumber);
 						}
 						else {
 							console.log('FOR Loop line #: ' + _lineNumber);
-							editBuilder.insert(new vscode.Position(_lineNumber, 1), tabSizeSpace);
+							editBuilder.insert(new vscode.Position(_lineNumber, 0), tabSizeSpace);
 						}
 						
 					}
