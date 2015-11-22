@@ -6,13 +6,13 @@
 			"url" : "https://github.com/Microsoft/vscode-htmltagwrap"
 		},
 	"description": "Wraps selected code with HTML tags",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"publisher": "bgashler1",
 	"engines": {
-		"vscode": "*"
+		"vscode": "0.10.x"
 	},
 	"activationEvents": [
-		"command:extension.sayHello"
+		"onCommand:extension.htmlTagWrap"
 	],
 	"main": "./out/extension",
 	"contributes": {
@@ -29,9 +29,9 @@
 	},
 	"scripts": {
 		"vscode:prepublish": "node ./node_modules/vscode/bin/compile",
-		"compile": "node ./node_modules/vscode/bin/compile -watch -p ./"
+        "compile": "node ./node_modules/vscode/bin/compile -watch -p ./"
 	},
 	"devDependencies": {
-		"vscode": "*"
+		"vscode": "0.10.x"
 	}
 }

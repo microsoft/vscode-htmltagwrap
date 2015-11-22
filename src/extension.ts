@@ -16,14 +16,14 @@ export function activate() {
 	vscode.commands.registerCommand('extension.htmlTagWrap', () => {
 		// The code you place here will be executed every time your command is executed
 
-		var editor = vscode.window.getActiveTextEditor();
+		var editor = vscode.window.activeTextEditor;
 		if (editor != undefined) {
 			
 			
 			console.log('Window has been got');
 			
-			var selection = editor.getSelection();
-			var selectedText = editor.getTextDocument().getTextInRange(selection);
+			var selection = editor.selection;
+			var selectedText = editor.document.getText(selection);
 			
 			var firstIndex = 1;
 			var lastIndex = selectedText.length;
@@ -39,7 +39,7 @@ export function activate() {
 				var lineAbove = selectionStart.line - 1;
 				var lineBelow = selectionEnd.line + 1;
 				
-				let tabSize = editor.getOptions().tabSize;
+				let tabSize = editor.options.tabSize;
 				//console.log('tabSize = ' + tabSize);
 				let tabSizeSpace = Array(tabSize+1).join(' ');
 				var selectionStart_spaces = Array(selectionStart.character).join(' ');
@@ -95,7 +95,7 @@ export function activate() {
 					var lastTagSelectionSelection: vscode.Selection = new vscode.Selection(bottomTagLine, selectionStart.character + 2, bottomTagLine, selectionStart.character + 3);
 					var tagSelections: vscode.Selection[] = [firstTagSelectionSelection, lastTagSelectionSelection];
 					
-					editor.setSelections(tagSelections)
+					editor.selections = tagSelections;
 				}, (err) => {
 					console.log('Edit rejected!');
 					console.error(err);
@@ -117,7 +117,7 @@ export function activate() {
 						var lastTagSelectionSelection: vscode.Selection = new vscode.Selection(selectionEnd.line, selectionEnd.character + 3 + 2, selectionEnd.line, selectionEnd.character + 3 + 3);
 						var tagSelections: vscode.Selection[] = [firstTagSelectionSelection, lastTagSelectionSelection];
 						
-						editor.setSelections(tagSelections)
+						editor.selections = tagSelections;
 					}, (err) => {
 						console.log('Edit rejected!');
 						console.error(err);
