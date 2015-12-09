@@ -7,7 +7,7 @@
 		},
 	"description": "Wraps selected code with HTML tags",
 	"version": "0.0.2",
-	"publisher": "bgashler1",
+	"publisher": "bradgashler",
 	"engines": {
 		"vscode": "0.10.x"
 	},
