@@ -43,7 +43,7 @@ export function activate() {
 				let tabSize = editor.options.tabSize;
 				//console.log('tabSize = ' + tabSize);
 				let tabSizeSpace = '\t';
-				var selectionStart_spaces = Array(selectionStart.character).join('\t');
+				var selectionStart_spaces = Array(selectionStart.character + 1).join('\t');
 				
 				//console.log('tabsizeSpace =' + tabSizeSpace);
 				
@@ -53,13 +53,14 @@ export function activate() {
 						var _lineNumber = i;
 						
 						if (_lineNumber === selectionEnd.line) {
-							editBuilder.insert(new vscode.Position(_lineNumber, selectionEnd.character), '\n' + selectionStart_spaces + '</p>');
+							editBuilder.insert(new vscode.Position(_lineNumber, selectionEnd.character), '\n' + selectionStart_spaces + '</p>' + tabSizeSpace);
 							editBuilder.insert(new vscode.Position(_lineNumber, 0), tabSizeSpace);
 							console.log('End line done.  Line #: ' + _lineNumber);
 						}
 						else if (_lineNumber === selectionStart.line) {
-							editBuilder.insert(new vscode.Position(_lineNumber, 0), selectionStart_spaces + '<p>\n'+tabSizeSpace);
+							editBuilder.insert(new vscode.Position(_lineNumber, selectionStart.character), '<p>\n' + selectionStart_spaces + tabSizeSpace);
 							console.log('Start Line done.  Line #: ' + _lineNumber);
+							console.log('selectionStart_spaces = ' + selectionStart_spaces);
 						}
 						else {
 							console.log('FOR Loop line #: ' + _lineNumber);
