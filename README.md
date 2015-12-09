@@ -2,7 +2,7 @@
 ##What is it
 Wraps your selection in HTML tags.  Can wrap an inline selection or a selection of multiple lines.
 
-![Wrap text in your images](/images/screenshot.png)
+![Wrap text in your images](images/screenshot.png)
 
 ##How to Use It
 Select a block of text or a string of text.  Press <kbd>Alt</kbd> + <kbd>W</kbd> or <kbd>Option</kbd> + <kbd>W</kbd> for Mac.  Type the tag name you want, and it will populate the beginning and end tag automatically.
