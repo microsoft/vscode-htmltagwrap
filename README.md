@@ -2,7 +2,7 @@
 ##What is it
 Wraps your selection in HTML tags.  Can wrap an inline selection or a selection of multiple lines.
 
-##Known Limitations
+##Known Issues
 It works only with code using tab formatting.  It won't currently play nice with spaces, if that's how you roll.  I would like to address this in the future.  Feel free to submit a pull request if you beat me to it.
 
 ##How to Use It
