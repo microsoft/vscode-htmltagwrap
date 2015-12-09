@@ -3,7 +3,7 @@
 Wraps your selection in HTML tags.  Can wrap an inline selection or a selection of multiple lines.
 
 ##Known Limitations
-It works best with with tab formatting.  It may not play nice with spaces, if that's how you roll.  I would like to address this in the future.  Feel free to submit a pull request if you beat me to it.
+It works only with code using tab formatting.  It won't currently play nice with spaces, if that's how you roll.  I would like to address this in the future.  Feel free to submit a pull request if you beat me to it.
 
 ##How to Use It
 Select a block of text or a string of text.  Press "Alt+W" or "Option+W" for Mac.  Type the tag name you want, and it will populate the beginning and end tag automatically.
