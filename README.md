@@ -2,11 +2,13 @@
 ##What is it
 Wraps your selection in HTML tags.  Can wrap an inline selection or a selection of multiple lines.
 
-##Known Issues
-It works only with code using tab formatting.  It won't currently play nice with spaces, if that's how you roll.  I would like to address this in the future.  Feel free to submit a pull request if you beat me to it.
+![Wrap text in your images](/images/screenshot.png)
 
 ##How to Use It
-Select a block of text or a string of text.  Press "Alt+W" or "Option+W" for Mac.  Type the tag name you want, and it will populate the beginning and end tag automatically.
+Select a block of text or a string of text.  Press <kbd>Alt</kbd> + <kbd>W</kbd> or <kbd>Option</kbd> + <kbd>W</kbd> for Mac.  Type the tag name you want, and it will populate the beginning and end tag automatically.
+
+##Known Issues
+It works only with code using tab formatting.  It won't currently play nice with spaces, if that's how you roll.  I would like to address this in the future.  Feel free to submit a pull request if you beat me to it.
 
 ##Report Issues
 I welcome pull requests.  Please report an issue on GitHub if you have trouble.  We haven't tested this on Mac yet.
