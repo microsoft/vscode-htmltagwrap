@@ -1,8 +1,11 @@
 # vscode-htmltagwrap
 ##What is it
 Wraps your selection in HTML tags.  Can wrap an inline selection or a selection of multiple lines.
+Simply select a chunk of code, press "Alt + W" ("Option + W" for Mac).
 
 ![Wrap text in your images](images/screenshot.PNG)
+
+Download it now https://marketplace.visualstudio.com/items/bradgashler.htmltagwrap
 
 ##How to Use It
 Select a block of text or a string of text.  Press <kbd>Alt</kbd> + <kbd>W</kbd> or <kbd>Option</kbd> + <kbd>W</kbd> for Mac.  Type the tag name you want, and it will populate the beginning and end tag automatically.
