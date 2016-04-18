@@ -13,6 +13,21 @@ export function activate() {
 	// The command has been defined in the package.json file
 	// Now provide the implementation of the command with  registerCommand
 	// The commandId parameter must match the command field in package.json
+	vscode.commands.registerCommand('type', (args) => {
+		if (!vscode.window.activeTextEditor) {
+			return;
+			// return by itself would return nothing and hijack the keyboard input doing nothing.
+		}
+		if (args.text === ' ') {
+			vscode.commands.executeCommand('removeSecondaryCursors');
+		}
+		vscode.commands.executeCommand('default:type', {
+			text: args.text
+			//TODO: I need to listen for when this should no longer be listening (e.g. if the cursor position doesn't change, then we allow this hack, otherwise we deactivate)
+		});
+
+
+	});
 	vscode.commands.registerCommand('extension.htmlTagWrap', () => {
 		// The code you place here will be executed every time your command is executed
 
