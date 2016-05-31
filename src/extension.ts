@@ -14,7 +14,7 @@ function getTabString(editor: vscode.TextEditor): string {
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
-export function activate() { 
+export function activate() {
 
 	// Use the console to output diagnostic information (console.log) and errors (console.error)
 	// This line of code will only be executed once when your extension is activated
@@ -28,84 +28,61 @@ export function activate() {
 
 		var editor = vscode.window.activeTextEditor;
 		if (editor != undefined) {
-			
 			console.log('Window has been got');
-			
+
 			var selection = editor.selection;
 			var selectedText = editor.document.getText(selection);
-			
+
 			var firstIndex = 1;
 			var lastIndex = selectedText.length;
-			
+
 			console.log('selection is: ' + selectedText);
 			console.log('length is: ' + lastIndex);
 			console.log('selection.start.character: ' + selection.start.character);
 			console.log('selection.end.character: ' + selection.end.character);
-			
+
 			var selectionStart = selection.start;
 			var selectionEnd = selection.end;
-			
+
 			if (selectionEnd.line > selectionStart.line) {
 				//Wrap it as a block
 				var lineAbove = selectionStart.line - 1;
 				var lineBelow = selectionEnd.line + 1;
-				
+
 				//console.log('tabSize = ' + tabSize);
 				let tabSizeSpace = getTabString(editor);
 				var selectionStart_spaces = editor.document.lineAt(selectionStart.line).text.substring(0, selectionStart.character);
-				
+				//console.log('selectionStart_spaces = ' + selectionStart_spaces);
 				//console.log('tabsizeSpace =' + tabSizeSpace);
-				
+
 				editor.edit((editBuilder) => {
-					
-					//last line
-					for (var i = selectionEnd.line; i >= selectionStart.line; i--) {
-						var _lineNumber = i;
-						
-						if (_lineNumber === selectionEnd.line) {
-							editBuilder.insert(new vscode.Position(_lineNumber, selectionEnd.character), '\n' + selectionStart_spaces + '</p>');
-							editBuilder.insert(new vscode.Position(_lineNumber, 0), tabSizeSpace);
-							console.log('End line done.  Line #: ' + _lineNumber);
-						}
-						else if (_lineNumber === selectionStart.line) {
-							editBuilder.insert(new vscode.Position(_lineNumber, selectionStart.character), '<p>\n' + selectionStart_spaces + tabSizeSpace);
-							console.log('Start Line done.  Line #: ' + _lineNumber);
-							console.log('selectionStart_spaces = ' + selectionStart_spaces);
-						}
-						else {
-							console.log('FOR Loop line #: ' + _lineNumber);
-							editBuilder.insert(new vscode.Position(_lineNumber, 0), tabSizeSpace);
-						}
-						
+					// Modify last line of selection
+					editBuilder.insert(new vscode.Position(selectionEnd.line, selectionEnd.character), '\n' + selectionStart_spaces + '</p>');
+					editBuilder.insert(new vscode.Position(selectionEnd.line, 0), tabSizeSpace);
+					console.log('End line done.  Line #: ' + selectionEnd.line);
+
+					for (let lineNumber = selectionEnd.line - 1; lineNumber > selectionStart.line; lineNumber--) {
+						console.log('FOR Loop line #: ' + lineNumber);
+						editBuilder.insert(new vscode.Position(lineNumber, 0), tabSizeSpace);
 					}
-					
-					//
-					
-					//
-					
-				/*
-				*	.then() => {}  is called a lambda funciton.  It's in multiple programming language, new to ECMAScript6.
-				*	It's like saying then(function(x));
-				*
-				*/					
+
+					// Modify firs line of selection
+					editBuilder.insert(new vscode.Position(selectionStart.line, selectionStart.character), '<p>\n' + selectionStart_spaces + tabSizeSpace);
+					console.log('Start Line done.  Line #: ' + selectionStart.line);
 				}).then(() => {
 					console.log('Edit applied!');
-					
+
 					var bottomTagLine = lineBelow + 1;
 					var firstTagSelectionSelection: vscode.Selection = new vscode.Selection(selectionStart.line, selectionStart.character + 1, selectionStart.line, selectionStart.character + 2);
 					var lastTagSelectionSelection: vscode.Selection = new vscode.Selection(bottomTagLine, selectionStart.character + 2, bottomTagLine, selectionStart.character + 3);
 					var tagSelections: vscode.Selection[] = [firstTagSelectionSelection, lastTagSelectionSelection];
-					
+
 					editor.selections = tagSelections;
 				}, (err) => {
 					console.log('Edit rejected!');
 					console.error(err);
 				});
-				
-							
 			}
-			
-			
 			else {
 				//Wrap it inline
 				editor.edit((editBuilder) => {
@@ -113,20 +90,17 @@ export function activate() {
 						editBuilder.insert(new vscode.Position(selectionEnd.line, selectionStart.character), '<p>');
 					}).then(() => {
 						console.log('Edit applied!');
-						
+
 						var firstTagSelectionSelection: vscode.Selection = new vscode.Selection(selectionStart.line, selectionStart.character + 1, selectionStart.line, selectionStart.character + 2);
 						var lastTagSelectionSelection: vscode.Selection = new vscode.Selection(selectionEnd.line, selectionEnd.character + 3 + 2, selectionEnd.line, selectionEnd.character + 3 + 3);
 						var tagSelections: vscode.Selection[] = [firstTagSelectionSelection, lastTagSelectionSelection];
-						
+
 						editor.selections = tagSelections;
 					}, (err) => {
 						console.log('Edit rejected!');
 						console.error(err);
-					});				
+					});
 			}
-			
-				
 		};
-		
 	});
 }
