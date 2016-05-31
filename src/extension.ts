@@ -1,6 +1,16 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
-import * as vscode from 'vscode'; 
+import * as vscode from 'vscode';
+
+function getTabString(editor: vscode.TextEditor): string {
+	let spacesUsed = <boolean>editor.options.insertSpaces;
+	if (spacesUsed) {
+		let numOfUsedSpaces = <number>editor.options.tabSize;
+		return ' '.repeat(numOfUsedSpaces);
+	}
+
+	return '\t';
+}
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -40,20 +50,20 @@ export function activate() {
 				var lineAbove = selectionStart.line - 1;
 				var lineBelow = selectionEnd.line + 1;
 				
-				let tabSize = editor.options.tabSize;
 				//console.log('tabSize = ' + tabSize);
-				let tabSizeSpace = '\t';
-				var selectionStart_spaces = Array(selectionStart.character + 1).join('\t');
+				let tabSizeSpace = getTabString(editor);
+				var selectionStart_spaces = editor.document.lineAt(selectionStart.line).text.substring(0, selectionStart.character);
 				
 				//console.log('tabsizeSpace =' + tabSizeSpace);
 				
 				editor.edit((editBuilder) => {
 					
+					//last line
 					for (var i = selectionEnd.line; i >= selectionStart.line; i--) {
 						var _lineNumber = i;
 						
 						if (_lineNumber === selectionEnd.line) {
-							editBuilder.insert(new vscode.Position(_lineNumber, selectionEnd.character), '\n' + selectionStart_spaces + '</p>' + tabSizeSpace);
+							editBuilder.insert(new vscode.Position(_lineNumber, selectionEnd.character), '\n' + selectionStart_spaces + '</p>');
 							editBuilder.insert(new vscode.Position(_lineNumber, 0), tabSizeSpace);
 							console.log('End line done.  Line #: ' + _lineNumber);
 						}
