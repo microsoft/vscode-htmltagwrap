@@ -30,11 +30,15 @@
 	"scripts": {
 		"vscode:prepublish": "node ./node_modules/vscode/bin/compile",
         "compile": "node ./node_modules/vscode/bin/compile -watch -p ./",
-		"postinstall": "node ./node_modules/vscode/bin/install"
+		"postinstall": "typings install && node ./node_modules/vscode/bin/install",
+		"typings": "typings"
 	},
 	"devDependencies": {
-		"vscode": "0.11.x",
-		"typescript": "^1.8.5"
+		"chai": "*",
+		"fs-extra": "^0.30.0",
+		"typescript": "^1.8.5",
+		"typings": "*",
+		"vscode": "0.11.x"
 	},
 	"icon":"images/htmlTagWrap_icon.svg",
 	"galleryBanner": {
