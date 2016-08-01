@@ -31,7 +31,8 @@
 		"vscode:prepublish": "node ./node_modules/vscode/bin/compile",
         "compile": "node ./node_modules/vscode/bin/compile -watch -p ./",
 		"postinstall": "typings install && node ./node_modules/vscode/bin/install",
-		"typings": "typings"
+		"typings": "typings",
+		"test:LinuxAndOSX": "node ./node_modules/vscode/bin/test"
 	},
 	"devDependencies": {
 		"chai": "*",

@@ -2,3 +2,4 @@ out
 node_modules
 typings
 test/sampleFiles/temp
+.vscode-test

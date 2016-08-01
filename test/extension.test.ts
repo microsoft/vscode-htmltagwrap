@@ -33,6 +33,8 @@ function parametrizedTest(startFilePath: string, expectedResultFilePath: string,
 			return workspace.openTextDocument(samplesFolder + expectedResultFilePath);
 		}).then((expectedResultDocument) => {
 			expectedResult = expectedResultDocument.getText();
+		}).then(()=> {
+			return commands.executeCommand('workbench.action.closeActiveEditor').then(() => new Promise((f) => setTimeout(f, 500)));
 		});
 
 		return testPromise.then(() => {
