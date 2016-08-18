@@ -28,7 +28,6 @@ export function activate() {
 
 		var editor = vscode.window.activeTextEditor;
 		if (editor != undefined) {
-			console.log('Window has been got');
 
 			var selection = editor.selection;
 			var selectedText = editor.document.getText(selection);
