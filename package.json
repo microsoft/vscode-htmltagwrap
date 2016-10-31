@@ -6,7 +6,7 @@
 			"url" : "https://github.com/Microsoft/vscode-htmltagwrap"
 		},
 	"description": "Wraps selected code with HTML tags",
-	"version": "0.0.3",
+	"version": "0.0.4",
 	"publisher": "bradgashler",
 	"engines": {
 		"vscode": "^1.0.0"
