@@ -77,11 +77,11 @@ suite('Extension Tests', function () {
 	// Multiple selecetion tests
 	test('Multiple Empty selections line wrap test', function() {
 		const selections: Array<CursorSelection> = [ 
-			[new Position(0, 0), new Position(0, 0)], 
 			[new Position(1, 0), new Position(1, 0)], 
-			[new Position(2, 0), new Position(2, 0)] 
+			[new Position(2, 0), new Position(2, 0)], 
+			[new Position(3, 0), new Position(3, 0)] 
 		];
-		return parametrizedMultiSelectionTest('emptyFileMultiLine.html', 'expectedEmptyFileMultipleCursorResult.html', selections, 'Empty selection tag wrap does not work with multiple selections');
+		return parametrizedMultiSelectionTest('emptySelectionMultipleCursors.html', 'expectedEmptySelectionMultipleCursorsResult.html', selections, 'Empty selection tag wrap does not work with multiple selections');
 	});
 
 	test('Multiple selections block wrap test', function() {
