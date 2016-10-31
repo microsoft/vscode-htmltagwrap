@@ -44,8 +44,6 @@ export function activate() {
 				
 				if(selectionEnd.line !== selectionStart.line) {
 					// Wrap it as a block
-					// TODO : This could be a bit better -- we should be finding the first non-whitespace character instead of taking
-					// the beginning of the selection.
 					var selectionStart_spaces = editor.document.lineAt(selectionStart.line).text.substring(0, selectionStart.character);
 					//console.log('selectionStart_spaces = ' + selectionStart_spaces);
 					//console.log('tabsizeSpace =' + tabSizeSpace);

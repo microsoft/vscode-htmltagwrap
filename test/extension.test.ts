@@ -58,5 +58,8 @@ suite('Extension Tests', function () {
 	test('HTML with spaces line wrap test', function () {
 		return parametrizedTest('spaceFile.html', 'expectedSpaceLineWrapFileResult.html', new Position(2, 8), new Position(2, 17), 'Space using line wrap does not work');
 	});
+	test('Empty selection line wrap test', function() {
+		return parametrizedTest('emptyFile.html', 'expectedEmptyFileResult.html', new Position(0, 0), new Position(0, 0), 'Empty selection tag wrap does not work');
+	});
 	teardown((done) => emptyDir(tempFolder, done));
 });
