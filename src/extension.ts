@@ -29,12 +29,18 @@ export function activate() {
 		var editor = vscode.window.activeTextEditor;
 		if (editor != undefined) {
 
+			let tag = vscode.workspace.getConfiguration().get<string>("htmltagwrap.tag");
+			if (!tag) {
+				tag = 'p'; 
+			}
+			
 			var selection = editor.selection;
 			var selectedText = editor.document.getText(selection);
 
 			var firstIndex = 1;
 			var lastIndex = selectedText.length;
-
+			
+			
 			console.log('selection is: ' + selectedText);
 			console.log('length is: ' + lastIndex);
 			console.log('selection.start.character: ' + selection.start.character);
@@ -56,7 +62,7 @@ export function activate() {
 
 				editor.edit((editBuilder) => {
 					// Modify last line of selection
-					editBuilder.insert(new vscode.Position(selectionEnd.line, selectionEnd.character), '\n' + selectionStart_spaces + '</p>');
+					editBuilder.insert(new vscode.Position(selectionEnd.line, selectionEnd.character), '\n' + selectionStart_spaces + '</' + tag + '>');
 					editBuilder.insert(new vscode.Position(selectionEnd.line, 0), tabSizeSpace);
 					console.log('End line done.  Line #: ' + selectionEnd.line);
 
@@ -66,7 +72,7 @@ export function activate() {
 					}
 
 					// Modify firs line of selection
-					editBuilder.insert(new vscode.Position(selectionStart.line, selectionStart.character), '<p>\n' + selectionStart_spaces + tabSizeSpace);
+					editBuilder.insert(new vscode.Position(selectionStart.line, selectionStart.character), '<' + tag + '>\n' + selectionStart_spaces + tabSizeSpace);
 					console.log('Start Line done.  Line #: ' + selectionStart.line);
 				}).then(() => {
 					console.log('Edit applied!');
@@ -85,8 +91,8 @@ export function activate() {
 			else {
 				//Wrap it inline
 				editor.edit((editBuilder) => {
-						editBuilder.insert(new vscode.Position(selectionEnd.line, selectionEnd.character), '</p>');
-						editBuilder.insert(new vscode.Position(selectionEnd.line, selectionStart.character), '<p>');
+						editBuilder.insert(new vscode.Position(selectionEnd.line, selectionEnd.character), '</' + tag + '>');
+						editBuilder.insert(new vscode.Position(selectionEnd.line, selectionStart.character), '<' + tag + '>');
 					}).then(() => {
 						console.log('Edit applied!');
 
