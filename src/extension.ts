@@ -40,7 +40,7 @@ export function activate() {
 			var firstIndex = 1;
 			var lastIndex = selectedText.length;
 			
-			
+
 			console.log('selection is: ' + selectedText);
 			console.log('length is: ' + lastIndex);
 			console.log('selection.start.character: ' + selection.start.character);
@@ -71,15 +71,15 @@ export function activate() {
 						editBuilder.insert(new vscode.Position(lineNumber, 0), tabSizeSpace);
 					}
 
-					// Modify firs line of selection
+					// Modify first line of selection
 					editBuilder.insert(new vscode.Position(selectionStart.line, selectionStart.character), '<' + tag + '>\n' + selectionStart_spaces + tabSizeSpace);
 					console.log('Start Line done.  Line #: ' + selectionStart.line);
 				}).then(() => {
 					console.log('Edit applied!');
 
 					var bottomTagLine = lineBelow + 1;
-					var firstTagSelectionSelection: vscode.Selection = new vscode.Selection(selectionStart.line, selectionStart.character + 1, selectionStart.line, selectionStart.character + 2);
-					var lastTagSelectionSelection: vscode.Selection = new vscode.Selection(bottomTagLine, selectionStart.character + 2, bottomTagLine, selectionStart.character + 3);
+					var firstTagSelectionSelection: vscode.Selection = new vscode.Selection(selectionStart.line, selectionStart.character + 1, selectionStart.line, selectionStart.character + 1 + tag.length);
+					var lastTagSelectionSelection: vscode.Selection = new vscode.Selection(bottomTagLine, selectionStart.character + 2, bottomTagLine, selectionStart.character + 2 + tag.length);
 					var tagSelections: vscode.Selection[] = [firstTagSelectionSelection, lastTagSelectionSelection];
 
 					editor.selections = tagSelections;
@@ -96,8 +96,8 @@ export function activate() {
 					}).then(() => {
 						console.log('Edit applied!');
 
-						var firstTagSelectionSelection: vscode.Selection = new vscode.Selection(selectionStart.line, selectionStart.character + 1, selectionStart.line, selectionStart.character + 2);
-						var lastTagSelectionSelection: vscode.Selection = new vscode.Selection(selectionEnd.line, selectionEnd.character + 3 + 2, selectionEnd.line, selectionEnd.character + 3 + 3);
+						var firstTagSelectionSelection: vscode.Selection = new vscode.Selection(selectionStart.line, selectionStart.character + 1, selectionStart.line, selectionStart.character + 1 + tag.length);
+						var lastTagSelectionSelection: vscode.Selection = new vscode.Selection(selectionEnd.line, selectionEnd.character + 3 + 1 + tag.length, selectionEnd.line, selectionEnd.character + 2 + 2 + 2*tag.length);
 						var tagSelections: vscode.Selection[] = [firstTagSelectionSelection, lastTagSelectionSelection];
 
 						editor.selections = tagSelections;
