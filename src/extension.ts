@@ -29,11 +29,17 @@ export function activate() {
 		var editor = vscode.window.activeTextEditor;
 		if (editor != undefined) {
 
+			let tag = vscode.workspace.getConfiguration().get<string>("htmltagwrap.tag");
+			if (!tag) {
+				tag = 'p'; 
+			}
+			
 			var selection = editor.selection;
 			var selectedText = editor.document.getText(selection);
 
 			var firstIndex = 1;
 			var lastIndex = selectedText.length;
+			
 
 			console.log('selection is: ' + selectedText);
 			console.log('length is: ' + lastIndex);
@@ -56,7 +62,7 @@ export function activate() {
 
 				editor.edit((editBuilder) => {
 					// Modify last line of selection
-					editBuilder.insert(new vscode.Position(selectionEnd.line, selectionEnd.character), '\n' + selectionStart_spaces + '</p>');
+					editBuilder.insert(new vscode.Position(selectionEnd.line, selectionEnd.character), '\n' + selectionStart_spaces + '</' + tag + '>');
 					editBuilder.insert(new vscode.Position(selectionEnd.line, 0), tabSizeSpace);
 					console.log('End line done.  Line #: ' + selectionEnd.line);
 
@@ -65,15 +71,15 @@ export function activate() {
 						editBuilder.insert(new vscode.Position(lineNumber, 0), tabSizeSpace);
 					}
 
-					// Modify firs line of selection
-					editBuilder.insert(new vscode.Position(selectionStart.line, selectionStart.character), '<p>\n' + selectionStart_spaces + tabSizeSpace);
+					// Modify first line of selection
+					editBuilder.insert(new vscode.Position(selectionStart.line, selectionStart.character), '<' + tag + '>\n' + selectionStart_spaces + tabSizeSpace);
 					console.log('Start Line done.  Line #: ' + selectionStart.line);
 				}).then(() => {
 					console.log('Edit applied!');
 
 					var bottomTagLine = lineBelow + 1;
-					var firstTagSelectionSelection: vscode.Selection = new vscode.Selection(selectionStart.line, selectionStart.character + 1, selectionStart.line, selectionStart.character + 2);
-					var lastTagSelectionSelection: vscode.Selection = new vscode.Selection(bottomTagLine, selectionStart.character + 2, bottomTagLine, selectionStart.character + 3);
+					var firstTagSelectionSelection: vscode.Selection = new vscode.Selection(selectionStart.line, selectionStart.character + 1, selectionStart.line, selectionStart.character + 1 + tag.length);
+					var lastTagSelectionSelection: vscode.Selection = new vscode.Selection(bottomTagLine, selectionStart.character + 2, bottomTagLine, selectionStart.character + 2 + tag.length);
 					var tagSelections: vscode.Selection[] = [firstTagSelectionSelection, lastTagSelectionSelection];
 
 					editor.selections = tagSelections;
@@ -85,13 +91,13 @@ export function activate() {
 			else {
 				//Wrap it inline
 				editor.edit((editBuilder) => {
-						editBuilder.insert(new vscode.Position(selectionEnd.line, selectionEnd.character), '</p>');
-						editBuilder.insert(new vscode.Position(selectionEnd.line, selectionStart.character), '<p>');
+						editBuilder.insert(new vscode.Position(selectionEnd.line, selectionEnd.character), '</' + tag + '>');
+						editBuilder.insert(new vscode.Position(selectionEnd.line, selectionStart.character), '<' + tag + '>');
 					}).then(() => {
 						console.log('Edit applied!');
 
-						var firstTagSelectionSelection: vscode.Selection = new vscode.Selection(selectionStart.line, selectionStart.character + 1, selectionStart.line, selectionStart.character + 2);
-						var lastTagSelectionSelection: vscode.Selection = new vscode.Selection(selectionEnd.line, selectionEnd.character + 3 + 2, selectionEnd.line, selectionEnd.character + 3 + 3);
+						var firstTagSelectionSelection: vscode.Selection = new vscode.Selection(selectionStart.line, selectionStart.character + 1, selectionStart.line, selectionStart.character + 1 + tag.length);
+						var lastTagSelectionSelection: vscode.Selection = new vscode.Selection(selectionEnd.line, selectionEnd.character + 3 + 1 + tag.length, selectionEnd.line, selectionEnd.character + 2 + 2 + 2*tag.length);
 						var tagSelections: vscode.Selection[] = [firstTagSelectionSelection, lastTagSelectionSelection];
 
 						editor.selections = tagSelections;

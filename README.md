@@ -15,6 +15,17 @@ Select a block of text or a string of text.  Press <kbd>Alt</kbd> + <kbd>W</kbd>
 
 This extension works best in files that either use tabs or spaces for indentation.  It may not work as well with mixed tabs/spaces.
 
+## Settings
+
+add htmltagwrap.tag to your settings.json file( <kbd>File</kbd>--><kbd>Preferences</kbd>--><kbd>Settings</kbd> )
+
+setting.json 
+ ```
+ {
+    "htmltagwrap.tag": "p"
+ }
+ ```
+
 ## Report Issues
 I welcome pull requests.  Please report an issue on GitHub if you have trouble.
 
