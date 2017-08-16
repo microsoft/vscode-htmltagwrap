@@ -22,7 +22,7 @@ add htmltagwrap.tag to your settings.json file( <kbd>File</kbd>--><kbd>Preferenc
 setting.json 
  ```
  {
-    "htmltagwrap.tag" = "p"
+    "htmltagwrap.tag": "p"
  }
  ```
 
